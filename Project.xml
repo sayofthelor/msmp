@@ -4,7 +4,7 @@
 
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="GameJamFall2024" file="GameJamFall2024" main="Main" version="0.0.1" company="HaxeFlixel" />
+	<app title="monkey see monkey press" file="msmp" main="backend.Main" version="0.1.0" company="SleepDeficitStudios" />
 
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
@@ -16,7 +16,7 @@
 	<!-- ____________________________ Window Settings ___________________________ -->
 
 	<!--These window settings apply to all targets-->
-	<window width="640" height="480" fps="60" background="#000000" hardware="true" vsync="false" />
+	<window width="1280" height="720" fps="120" background="#000000" hardware="true" vsync="false" />
 
 	<!--HTML5-specific-->
 	<window if="html5" resizable="true" />
@@ -35,10 +35,13 @@
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
+
 	<haxelib name="flixel" />
+	<haxelib name="hscript-lore" /> 
+	<!-- hscript-lore should be branch legacy -->
 
 	<!--In case you want to use the addons package-->
-	<!--<haxelib name="flixel-addons" />-->
+	<haxelib name="flixel-addons" />
 
 	<!--In case you want to use the ui package-->
 	<!--<haxelib name="flixel-ui" />-->
@@ -64,6 +67,8 @@
 	<haxedef name="FLX_NO_MOUSE" if="mobile" />
 	<haxedef name="FLX_NO_KEYBOARD" if="mobile" />
 	<haxedef name="FLX_NO_TOUCH" if="desktop" />
+
+	<haxeflag name="-dce" value="no" />
 	<!--<haxedef name="FLX_NO_GAMEPAD" />-->
 
 	<!--Disable the Flixel core sound tray-->

@@ -1,0 +1,40 @@
+// hscript-lore@legacy-ffc2952 | monkey see monkey press v0.1.0
+import backend.Music;
+import backend.Assets;
+import flixel.text.FlxText;
+import flixel.FlxG;
+import gameplay.PlayState;
+
+var tutorial_text:FlxText;
+function onCreate() {
+    trace("hi");
+    tutorial_text = new FlxText(0,0,FlxG.width, "welcome to\nmonkey see monkey press").setFormat(Assets.font("Daydream"), 24, 0xffeeeeee, "center");
+    tutorial_text.y = 128;
+    PlayState.current.add(tutorial_text);
+}
+
+function onBeat(beat:Int) {
+    trace(beat);
+    switch (beat) {
+        case 8:
+            tutorial_text.text = "you are the monkey\n on the right!";
+        case 16:
+            tutorial_text.text = "control your buttons\nwith the f and j keys";
+        case 24:
+            tutorial_text.text = "your opponent will\nplay a section";
+        case 32:
+            tutorial_text.text = "then you'll play it!";
+        case 40:
+            tutorial_text.text = "give it a try!";
+        case 44:
+            tutorial_text.text = "";
+        case 64:
+            tutorial_text.text = "great job!";
+        case 72:
+            tutorial_text.text = "let's try a harder one!";
+        case 76:
+            tutorial_text.text = "";
+        case 76:
+            tutorial_text.text = "you got it!";
+    }
+}

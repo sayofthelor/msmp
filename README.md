@@ -1,1 +1,1 @@
-# GameJamFall2024
+# [monkey see, monkey press](http://sayofthelor.itch.io/msmp)
