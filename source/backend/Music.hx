@@ -12,7 +12,9 @@ class Music extends FlxBasic
 
 	public static function set_offset(v:Float)
 	{
-		return FlxG.save.data.offset = offset = v;
+		FlxG.save.data.offset = v;
+		FlxG.save.flush();
+		return offset = v;
 	}
 
 	public var bpm(default, set):Float;

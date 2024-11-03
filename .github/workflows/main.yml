@@ -44,16 +44,16 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup ~/haxelib
-          haxelib install lime
-          haxelib install openfl
-          haxelib install flixel
+          haxelib install lime > /dev/null
+          haxelib install openfl > /dev/null
+          haxelib install flixel > /dev/null
           haxelib run lime setup --always
           haxelib run lime setup flixel --always
           haxelib git hscript-lore https://github.com/sayofthelor/hscript-lore legacy
       - name: Compile
         run: haxelib run lime build Project.xml hl
-      - name: Fix Mac Run
-        run: chmod +x export/release/mac/bin/msmp
+      - name: Fix Linux Run
+        run: chmod +x export/hl/bin/msmp
       - name: Publish Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -84,9 +84,9 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup C:/haxelib
-          haxelib install lime
-          haxelib install openfl
-          haxelib install flixel
+          haxelib install lime > nul
+          haxelib install openfl > nul
+          haxelib install flixel > nul
           haxelib run lime setup --always
           haxelib run lime setup flixel --always
           haxelib git hscript-lore https://github.com/sayofthelor/hscript-lore legacy
@@ -122,9 +122,9 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup ~/haxelib
-          haxelib install lime
-          haxelib install openfl
-          haxelib install flixel
+          haxelib install lime >/ dev/null
+          haxelib install openfl > /dev/null
+          haxelib install flixel > /dev/null
           haxelib run lime setup -y
           haxelib run lime setup flixel -y
           haxelib git hscript-lore https://github.com/sayofthelor/hscript-lore legacy
@@ -136,6 +136,6 @@ jobs:
       - name: Publish Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: macBuild
+          name: msmp-mac
           path: export/hl/bin
   

@@ -31,8 +31,14 @@ class PlayerSprites extends FlxSpriteGroup
 		box.antialiasing = false;
 		box.scale *= 2;
 		box.updateHitbox();
-		box.x = player.x + (player.width / 2) - (box.width / 2);
+		if (!robot)
+		{
+			trace(player.width);
+		}
+		box.x = player.x + (181) - (box.width / 2);
 		box.y = player.y + (player.height) - (box.height * 0.25) - 10;
+		if (robot)
+			player.x = (box.x + box.width / 2 - player.width / 2);
 		add(box);
 		hands.push(new FlxSprite().loadGraphic(Assets.image(robot ? "hands_opp" : "hands")));
 		hands[0].scale /= 2;
@@ -70,10 +76,11 @@ class PlayerSprites extends FlxSpriteGroup
 		buttons_pressed[0].visible = buttons_pressed[1].visible = false;
 		if (robot)
 		{
-			player.y += 80;
-			player.origin.y -= 80;
-			player.clipRect = new FlxRect(0, 0, player.width, player.height - 80);
+			player.y += 75;
+			player.origin.y -= 75;
+			player.clipRect = new FlxRect(0, 0, player.width, player.height - 75);
 		}
+		trace(box.y);
 	}
 
 	var isPressed:Array<Bool> = [false, false];

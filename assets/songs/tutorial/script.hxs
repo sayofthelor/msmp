@@ -7,14 +7,12 @@ import gameplay.PlayState;
 
 var tutorial_text:FlxText;
 function onCreate() {
-    trace("hi");
     tutorial_text = new FlxText(0,0,FlxG.width, "welcome to\nmonkey see monkey press").setFormat(Assets.font("Daydream"), 24, 0xffeeeeee, "center");
-    tutorial_text.y = 128;
+    tutorial_text.y = PlayState.current.scoreText.y + PlayState.current.scoreText.height + 48;
     PlayState.current.add(tutorial_text);
 }
 
 function onBeat(beat:Int) {
-    trace(beat);
     switch (beat) {
         case 8:
             tutorial_text.text = "you are the monkey\n on the right!";

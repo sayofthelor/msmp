@@ -7,7 +7,6 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.input.mouse.FlxMouse;
 import flixel.text.FlxText;
-import flixel.ui.FlxBar;
 
 using ui.TitleScreen; // lol
 
@@ -15,6 +14,8 @@ class TitleScreen extends FlxState
 {
 	public var playTutorialText:FlxText;
 	public var playRadioactiveText:FlxText;
+	public var hsTutorialText:FlxText;
+	public var hsRadioactiveText:FlxText;
 	public var offsetText:FlxText;
 
 	public override function create()
@@ -30,14 +31,21 @@ class TitleScreen extends FlxState
 		offsetText.y = FlxG.height - offsetText.height - 32;
 		offsetText.screenCenter(X);
 		add(offsetText);
-		playRadioactiveText = new FlxText(0, 0, 0, "play radioactive").setFormat(Assets.font("Daydream"), 32, 0xffeeeeee, CENTER);
+		playRadioactiveText = new FlxText(32, 0, 0, "play radioactive").setFormat(Assets.font("Daydream"), 32, 0xffeeeeee, CENTER);
 		playRadioactiveText.y = offsetText.y - playRadioactiveText.height - 32;
-		playRadioactiveText.screenCenter(X);
 		add(playRadioactiveText);
-		playTutorialText = new FlxText(0, 0, 0, "play tutorial").setFormat(Assets.font("Daydream"), 32, 0xffeeeeee, CENTER);
+		playTutorialText = new FlxText(32, 0, 0, "play tutorial").setFormat(Assets.font("Daydream"), 32, 0xffeeeeee, CENTER);
 		playTutorialText.y = playRadioactiveText.y - playTutorialText.height - 32;
-		playTutorialText.screenCenter(X);
 		add(playTutorialText);
+		hsRadioactiveText = new FlxText(32, 0, 0,
+			'highscore: ${FlxG.save.data.highscoreRadioactive}').setFormat(Assets.font("Daydream"), 16, 0xffeeeeee, CENTER);
+		hsRadioactiveText.x = FlxG.width - hsRadioactiveText.width - 32;
+		hsRadioactiveText.y = playRadioactiveText.y + (playRadioactiveText.height / 2) - (hsRadioactiveText.height / 2);
+		add(hsRadioactiveText);
+		hsTutorialText = new FlxText(32, 0, 0, 'highscore: ${FlxG.save.data.highscoreTutorial}').setFormat(Assets.font("Daydream"), 16, 0xffeeeeee, CENTER);
+		hsTutorialText.x = FlxG.width - hsTutorialText.width - 32;
+		hsTutorialText.y = playTutorialText.y + (playTutorialText.height / 2) - (hsTutorialText.height / 2);
+		add(hsTutorialText);
 		add({
 			var t = new FlxText(0, 32, 0, "monkey\nsee\nmonkey\npress").setFormat(Assets.font("Daydream"), 64, 0xffeeeeee, CENTER);
 			t.screenCenter(X);

@@ -85,7 +85,7 @@ class FlxSoundTray extends Sprite
 		text.gridFitType = GridFitType.PIXEL;
 		#else
 		#end
-		var dtf:TextFormat = new TextFormat("Daydream", 10, 0xffffff);
+		var dtf:TextFormat = new TextFormat("Daydream", 8, 0xffeeeeee);
 		dtf.align = TextFormatAlign.CENTER;
 		text.defaultTextFormat = dtf;
 		addChild(text);

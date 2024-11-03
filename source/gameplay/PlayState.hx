@@ -6,6 +6,7 @@ import backend.Parser;
 import backend.Script;
 import flixel.FlxCamera;
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
@@ -38,6 +39,8 @@ class PlayState extends FlxState
 	}
 	public var player:PlayerSprites;
 	public var opponent:PlayerSprites;
+	public var playerIcon:FlxSprite;
+	public var opponentIcon:FlxSprite;
 	override public function create()
 	{
 		super.create();
@@ -60,9 +63,20 @@ class PlayState extends FlxState
 		opponentSide.addStrums();
 		playerSide.addStrums();
 		chart = Parser.parseChart(songToLoad, "normal");
-		add(new Music(Assets.song(songToLoad), 1, () -> FlxG.switchState(ui.TitleScreen.new)));
+		add(new Music(Assets.song(songToLoad), 1, () ->
+		{
+			if (songToLoad == "tutorial")
+			{
+				FlxG.save.data.highscoreTutorial = score;
+			}
+			else if (songToLoad == "radioactive")
+			{
+				FlxG.save.data.highscoreRadioactive = score;
+			}
+			FlxG.save.flush();
+			FlxG.switchState(ui.TitleScreen.new);
+		}));
 		script = new Script('songs/$songToLoad');
-		script.call("onCreate");
 		Music.primary.bpm = chart.bpm;
 		Music.primary.onBeat.add(onBeat);
 		Music.primary.onStep.add(onStep);
@@ -80,9 +94,10 @@ class PlayState extends FlxState
 		for (line in [playerSide, opponentSide]) {
 			line.sideNotes.sort((a, b) -> Std.int(a.time - b.time));
 		}
-		scoreAddText = new FlxText(0, 0, 0, "").setFormat(Assets.font("Daydream"), 24, CENTER);
+		scoreAddText = new FlxText(0, 0, 0, "").setFormat(Assets.font("Daydream"), 24, 0xffeeeeee, CENTER);
 		add(scoreAddText);
-		timeText = new FlxText(0, 16, FlxG.width, '0:00 / ${FlxStringUtil.formatTime(Music.primary.music.length / 1000)}').setFormat(Assets.font("Daydream"), 32, CENTER);
+		timeText = new FlxText(0, 16, FlxG.width,
+			'0:00 / ${FlxStringUtil.formatTime(Music.primary.music.length / 1000)}').setFormat(Assets.font("Daydream"), 32, 0xffeeeeee, CENTER);
 		timeText.camera = hud;
 		add(timeText);
 		timeBar = new FlxBar(0, 0, 1000, 16, Music.primary, "position", 0, Music.primary.music.length);
@@ -92,18 +107,36 @@ class PlayState extends FlxState
 		timeBar.y = timeText.y + timeText.height + 16;
 		timeBar.camera = hud;
 		add(timeBar);
-		scoreText = new FlxText(0, 0, FlxG.width, "score: 0").setFormat(Assets.font("Daydream"), 24, CENTER);
+		scoreText = new FlxText(0, 0, FlxG.width, "score: 0").setFormat(Assets.font("Daydream"), 24, 0xffeeeeee, CENTER);
 		scoreText.y = timeBar.y + timeBar.height + 16;
 		scoreText.camera = hud;
 		add(scoreText);
 		Music.primary.play();
+		playerIcon = new FlxSprite().loadGraphic(Assets.image("player_icon"));
+		playerIcon.scale *= 2;
+		playerIcon.antialiasing = false;
+		playerIcon.updateHitbox();
+		playerIcon.y = (timeBar.y + timeBar.height / 2 - playerIcon.height / 2);
+		playerIcon.x = timeBar.x + timeBar.width - 5;
+		playerIcon.camera = hud;
+		add(playerIcon);
+		opponentIcon = new FlxSprite().loadGraphic(Assets.image("opp_icon"));
+		opponentIcon.scale *= 2;
+		opponentIcon.antialiasing = false;
+		opponentIcon.updateHitbox();
+		opponentIcon.y = (timeBar.y + timeBar.height / 2 - opponentIcon.height / 2);
+		opponentIcon.x = timeBar.x - opponentIcon.width + 5;
+		opponentIcon.camera = hud;
+		add(opponentIcon);
 		add({
 			var t = new FlxText(16, 16, 0, "esc to exit").setFormat(Assets.font("Daydream"), 16, 0xffeeeeee);
+			t.camera = hud;
 			FlxTween.tween(t, {alpha: 0}, Music.primary.beatTime / 500, {startDelay: Music.primary.beatTime / 500, onComplete: (_) -> {
 				remove(t).destroy();
 			}});
 			t;
 		});
+		script.call("onCreate");
 	}
 
 	override public function update(elapsed:Float)
@@ -145,7 +178,7 @@ class PlayState extends FlxState
 		scoreAddText.text = '$name +$s';
 		scoreAddText.scale.set(1.1,1.1);
 		scoreAddText.alpha = 1;
-		scoreAddText.x = (FlxG.width * 2 / 3) - 25 - (scoreAddText.width / 2);
+		scoreAddText.screenCenter(X);
 		scoreAddText.y = (playerSide.members[0].y + playerSide.members[0].height + 8);
 		scoreTween2 = FlxTween.tween(scoreAddText, {"scale.x":1,"scale.y":1}, 0.25, {ease:FlxEase.quintOut, onComplete: (_) -> {
 			scoreTween2 = null;

@@ -9,7 +9,7 @@ class Strum extends FlxSprite
 
 	public function new(?x:Float = 0, strumline:Strumline)
 	{
-		super(x, FlxG.height - 108);
+		super(x, FlxG.height - 96.5);
 		makeGraphic(75, 25, 0xffffffff);
 		updateHitbox();
 		this.strumline = strumline;
