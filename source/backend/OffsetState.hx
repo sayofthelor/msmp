@@ -17,7 +17,7 @@ class OffsetState extends FlxState
 	override public function create()
 	{
 		super.create();
-		FlxG.camera.bgColor = 0xffec5a9e;
+		FlxG.camera.bgColor = 0xffef89b8;
 		add({
 			var t = new FlxText(0, 32, 0, "esc to go to menu").setFormat(Assets.font("Daydream"), 32, 0xffeeeeee, CENTER);
 			t.screenCenter(X);

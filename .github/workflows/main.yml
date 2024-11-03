@@ -55,10 +55,10 @@ jobs:
       - name: Fix Mac Run
         run: chmod +x export/release/mac/bin/msmp
       - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v4
         with:
-          name: linuxBuild
-          path: 'export/release/linux/bin'
+          name: msmp-linux
+          path: 'export/hl/bin'
   buildWindows:
     runs-on: windows-latest
 
@@ -93,10 +93,10 @@ jobs:
       - name: Compile
         run: haxelib run lime build hl
       - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v4
         with:
-          name: windowsBuild
-          path: export/release/windows/bin
+          name: msmp-windows
+          path: export/hl/bin
   buildMac:
     runs-on: macos-13
 
@@ -132,10 +132,10 @@ jobs:
       - name: Compile
         run: haxelib run lime build hl
       - name: Fix Mac Run
-        run: chmod -R +x export/release/mac/bin/msmp.app/Contents/MacOS/
+        run: chmod -R +x export/hl/bin/msmp.app/Contents/MacOS/
       - name: Publish Artifact
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v4
         with:
           name: macBuild
-          path: export/release/macos/bin
+          path: export/hl/bin
   
